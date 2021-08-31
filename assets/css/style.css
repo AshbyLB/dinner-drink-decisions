@@ -6,4 +6,15 @@
 
 body {
     background-image: url("../img/martini.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+.nav-wrapper {
+    color:white;
+    font-family: 'Cookie', cursive;
+}
+.ranHead {
+    color: rgb(255, 208, 121);
 }
