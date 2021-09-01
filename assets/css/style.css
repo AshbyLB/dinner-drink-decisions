@@ -18,3 +18,18 @@ body {
 .ranHead {
     color: rgb(255, 208, 121);
 }
+
+#menu {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: tomato;
+}
+
+.tap-target {
+    color: white;
+}
+
+#popP {
+    font-size: 115%;
+}

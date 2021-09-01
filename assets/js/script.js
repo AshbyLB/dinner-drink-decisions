@@ -2,10 +2,11 @@ var randomDrink = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 var randomMeal = "https://www.themealdb.com/api/json/v1/1/random.php";
 var selectElement = document.querySelector('select');
 var showEl = document.querySelector(".showEl");
-
+var popUp = document.getElementById("menu");
 
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
+    popUp.classList.add("hide");
     console.log(event.target.value);
     if (event.target.value === "1") {
         fetch(randomMeal)
@@ -86,3 +87,14 @@ selectElement.addEventListener('change', (event) => {
 
 );
 
+var toggleTarget = function() {
+    var elem = document.querySelector('.tap-target');
+    var instance = M.TapTarget.init(elem);
+    if (instance.isOpen) {
+        return instance.destroy();
+    }
+    return instance.open();
+  }
+
+document.addEventListener('DOMContentLoaded', toggleTarget);
+popUp.addEventListener('click', toggleTarget);
