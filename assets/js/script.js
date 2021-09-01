@@ -56,6 +56,9 @@ selectElement.addEventListener('change', (event) => {
                 imgEl.src = mealData.image;
                 nameEl.textContent = mealData.name;
 
+                
+                ulEl.innerHTML = "";
+
                 for(var i=0; i <mealData.ingredients.length; i++){
                 var liEl = document.createElement("li");
                 liEl.textContent = mealData.ingredients[i];
@@ -107,6 +110,8 @@ selectElement.addEventListener('change', (event) => {
                 imgEl.src = drinkData.image;
 
                 nameEl.textContent = drinkData.name;
+
+                ulEl.innerHTML = "";
 
                 for(var i=0; i <drinkData.ingredients.length; i++){
                 var liEl = document.createElement("li");
