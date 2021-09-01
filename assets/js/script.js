@@ -17,6 +17,7 @@ selectElement.addEventListener('change', (event) => {
     popUp.classList.add("hide");
     console.log(event.target.value);
     if (event.target.value === "1") {
+        event.target.value = "";
         fetch(randomMeal)
             .then(function (response) {
                 return response.json();
@@ -74,6 +75,7 @@ selectElement.addEventListener('change', (event) => {
             })
 
     } else {
+        event.target.value = "";
         fetch(randomDrink)
             .then(function (response) {
                 return response.json();
