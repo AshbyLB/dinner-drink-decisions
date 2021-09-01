@@ -3,6 +3,14 @@ var randomMeal = "https://www.themealdb.com/api/json/v1/1/random.php";
 var selectElement = document.querySelector('select');
 var showEl = document.querySelector(".showEl");
 var popUp = document.getElementById("menu");
+var nameEl = document.querySelector(".card-title"); 
+var imgEl = document.querySelector(".recipePic");
+var ulEl = document.getElementById("ingredients");
+var instructionsEl = document.getElementById("instructions");
+var sourceEl = document.getElementById("source");
+var h6El = document.getElementById("sourceH6");
+
+
 
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
@@ -44,7 +52,22 @@ selectElement.addEventListener('change', (event) => {
                         mealData.image = meal[prop];
                     }
                 }
-                console.log(mealData);
+
+                imgEl.src = mealData.image;
+                nameEl.textContent = mealData.name;
+
+                for(var i=0; i <mealData.ingredients.length; i++){
+                var liEl = document.createElement("li");
+                liEl.textContent = mealData.ingredients[i];
+                ulEl.appendChild(liEl);
+                }
+
+                instructionsEl.textContent = mealData.instructions;
+
+                h6El.textContent = "Link to full recipe: ";
+                sourceEl.textContent = mealData.source;
+                sourceEl.href = mealData.source;
+
             })
 
     } else {
@@ -80,6 +103,23 @@ selectElement.addEventListener('change', (event) => {
                     }
                 }
                 console.log(drinkData);
+                console.log(drinkData.image);
+                imgEl.src = drinkData.image;
+
+                nameEl.textContent = drinkData.name;
+
+                for(var i=0; i <drinkData.ingredients.length; i++){
+                var liEl = document.createElement("li");
+                liEl.textContent = drinkData.ingredients[i];
+                ulEl.appendChild(liEl);
+                }
+
+                instructionsEl.textContent = drinkData.instructions;
+                console.log(drinkData.instructions);
+
+                sourceEl.textContent = "";
+                sourceEl.href = "";
+                h6El.textContent = "";
             })
             };
     }
@@ -97,4 +137,4 @@ var toggleTarget = function() {
   }
 
 document.addEventListener('DOMContentLoaded', toggleTarget);
-popUp.addEventListener('click', toggleTarget);
+
