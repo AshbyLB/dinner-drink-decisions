@@ -23,7 +23,6 @@ body {
     position: fixed;
     bottom: 40px;
     right: 40px;
-    background-color: tomato;
 }
 
 .tap-target {
@@ -32,4 +31,21 @@ body {
 
 #popP {
     font-size: 115%;
+}
+
+.cardEl {
+    border: solid white 5px;
+    border-radius: 10px;
+}
+
+.card-title{
+    font-size: 250%;
+    font-weight:900;
+    background-color:black;
+}
+
+h6 {
+    font-family: 'Cookie', cursive;
+    text-decoration: underline;
+    font-size: 200%;
 }
