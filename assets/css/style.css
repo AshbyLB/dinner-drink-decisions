@@ -56,6 +56,7 @@ body {
 
 #saveBtn:hover {
     font-size: 115%;
+    background-color: olive;
 }
 
 h6 {
@@ -74,14 +75,40 @@ h6 {
     display:inline-block;
 }
 
+.drinkDiv {
+    font-family: 'Cookie', cursive;
+    color:white;
+}
+
+.mealDiv {
+    font-family: 'Cookie', cursive;
+    color:white;
+}
+
 .mealLi{
     padding: 5px;
     background-color: olivedrab;
     margin: 5px;
+    font-family: sans-serif;
+    color:rgb(255, 208, 121);
+    border-radius: 10px;
 }
 
 .drinkLi{
     padding: 5px;
     background-color: olivedrab;
     margin: 5px;
+    font-family: sans-serif;
+    color:rgb(255, 208, 121);
+    border-radius: 10px;
+}
+
+.drinkLi:hover {
+    font-size: 115%;
+    background-color: olive;
+}
+
+.mealLi:hover {
+    font-size: 115%;
+    background-color: olive;
 }
