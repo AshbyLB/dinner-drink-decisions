@@ -3,13 +3,15 @@ var randomMeal = "https://www.themealdb.com/api/json/v1/1/random.php";
 var selectElement = document.querySelector('select');
 var showEl = document.querySelector(".showEl");
 var popUp = document.getElementById("menu");
-var nameEl = document.querySelector(".card-title"); 
+var nameEl = document.querySelector(".card-title");
 var imgEl = document.querySelector(".recipePic");
 var ulEl = document.getElementById("ingredients");
 var instructionsEl = document.getElementById("instructions");
 var sourceEl = document.getElementById("source");
 var h6El = document.getElementById("sourceH6");
 var saveBtn = document.getElementById("saveBtn");
+var cardEl = document.querySelector(".cardEl");
+var drinkUl = document.getElementById("drinkUl");
 
 
 
@@ -23,62 +25,7 @@ selectElement.addEventListener('change', (event) => {
             .then(function (response) {
                 return response.json();
             })
-            .then(function (data) {
-                console.log('DATA', data.meals[0]);
-                var meal = data.meals[0];
-                var mealData = {
-                    name: '',
-                    instructions: '',
-                    ingredients: [],
-                    source: '',
-                    image: ''
-                };
-                for(var prop in meal) {
-                    if (prop === "strMeal") { // name
-                        mealData.name = meal[prop];
-                    }
-
-                    if (prop === "strInstructions") { // instructions
-                        mealData.instructions = meal[prop];
-                    }
-
-                    if (prop.includes("strIngredient") && meal[prop]) { // ingredients that have values
-                        mealData.ingredients.push(meal[prop]);
-                    }
-
-                    if (prop === "strSource") { // source
-                        mealData.source = meal[prop];
-                    }
-
-                    if (prop === "strMealThumb") { // image
-                        mealData.image = meal[prop];
-                    }
-                }
-                
-                
-                imgEl.src = mealData.image;
-                nameEl.textContent = mealData.name;
-                
-                
-                ulEl.innerHTML = "";
-                
-                for(var i=0; i <mealData.ingredients.length; i++){
-                    var liEl = document.createElement("li");
-                    liEl.textContent = mealData.ingredients[i];
-                    ulEl.appendChild(liEl);
-                }
-                
-                instructionsEl.textContent = mealData.instructions;
-                
-                h6El.textContent = "Link to full recipe: ";
-                sourceEl.textContent = mealData.source;
-                sourceEl.href = mealData.source;
-                
-
-
-                localStorage.setItem("mealRecipe", JSON.stringify(mealData));
-                
-            })
+            .then(buildMeal)
 
     } else {
         event.target.value = "";
@@ -86,61 +33,126 @@ selectElement.addEventListener('change', (event) => {
             .then(function (response) {
                 return response.json();
             })
-            .then(function (data) {
-                console.log("Drinks", data.drinks[0])
-                var drink = data.drinks[0];
-                var drinkData = {
-                    name: '',
-                    instructions: '',
-                    ingredients: [],
-                    image: ''
-                };
-                for(var prop in drink) {
-                    if (prop === "strDrink") { // name
-                        drinkData.name = drink[prop];
-                    }
-                    
-                    if (prop === "strInstructions") { // instructions
-                        drinkData.instructions = drink[prop];
-                    }
-                    
-                    if (prop.includes("strIngredient") && drink[prop]) { // ingredients that have values
-                        drinkData.ingredients.push(drink[prop]);
-                    }
-                    
-                    if (prop === "strDrinkThumb") { // image
-                        drinkData.image = drink[prop];
-                    }
-                }
-                console.log(drinkData);
-                console.log(drinkData.image);
-                imgEl.src = drinkData.image;
-                
-                nameEl.textContent = drinkData.name;
-                
-                ulEl.innerHTML = "";
-                
-                for(var i=0; i <drinkData.ingredients.length; i++){
-                    var liEl = document.createElement("li");
-                    liEl.textContent = drinkData.ingredients[i];
-                    ulEl.appendChild(liEl);
-                }
-                
-                instructionsEl.textContent = drinkData.instructions;
-                
-                sourceEl.textContent = "";
-                sourceEl.href = "";
-                h6El.textContent = "";
+            .then(buildDrink)
+    };
+}
 
-                localStorage.setItem("mealRecipe", JSON.stringify(drinkData));
-            })
-        };
-    }
-    
 
 );
 
-var toggleTarget = function() {
+function buildMeal(data) {
+    cardEl.setAttribute("data-id", "meal")
+    console.log('DATA', data.meals[0]);
+    var meal = data.meals[0];
+    var mealData = {
+        name: '',
+        instructions: '',
+        ingredients: [],
+        source: '',
+        image: '',
+        id: ''
+    };
+    for (var prop in meal) {
+        if (prop === "strMeal") { // name
+            mealData.name = meal[prop];
+        }
+
+        if (prop === "strInstructions") { // instructions
+            mealData.instructions = meal[prop];
+        }
+
+        if (prop.includes("strIngredient") && meal[prop]) { // ingredients that have values
+            mealData.ingredients.push(meal[prop]);
+        }
+
+        if (prop === "strSource") { // source
+            mealData.source = meal[prop];
+        }
+
+        if (prop === "strMealThumb") { // image
+            mealData.image = meal[prop];
+        }
+        if (prop === "idMeal") {
+            mealData.id = meal[prop];
+        }
+    }
+
+
+    imgEl.src = mealData.image;
+    nameEl.textContent = mealData.name;
+
+
+    ulEl.innerHTML = "";
+
+    for (var i = 0; i < mealData.ingredients.length; i++) {
+        var liEl = document.createElement("li");
+        liEl.textContent = mealData.ingredients[i];
+        ulEl.appendChild(liEl);
+    }
+
+    instructionsEl.textContent = mealData.instructions;
+
+    h6El.textContent = "Link to full recipe: ";
+    sourceEl.textContent = mealData.source;
+    sourceEl.href = mealData.source;
+
+
+
+    //localStorage.setItem("mealRecipe", JSON.stringify(mealData));
+
+}
+
+function buildDrink(data) {
+    cardEl.setAttribute("data-id", "drink");
+    console.log("Drinks", data.drinks[0])
+    var drink = data.drinks[0];
+    var drinkData = {
+        name: '',
+        instructions: '',
+        ingredients: [],
+        image: ''
+    };
+    for (var prop in drink) {
+        if (prop === "strDrink") { // name
+            drinkData.name = drink[prop];
+        }
+
+        if (prop === "strInstructions") { // instructions
+            drinkData.instructions = drink[prop];
+        }
+
+        if (prop.includes("strIngredient") && drink[prop]) { // ingredients that have values
+            drinkData.ingredients.push(drink[prop]);
+        }
+
+        if (prop === "strDrinkThumb") { // image
+            drinkData.image = drink[prop];
+        }
+    }
+    console.log(drinkData);
+    console.log(drinkData.image);
+    imgEl.src = drinkData.image;
+
+    nameEl.textContent = drinkData.name;
+
+    ulEl.innerHTML = "";
+
+    for (var i = 0; i < drinkData.ingredients.length; i++) {
+        var liEl = document.createElement("li");
+        liEl.textContent = drinkData.ingredients[i];
+        ulEl.appendChild(liEl);
+    }
+
+    instructionsEl.textContent = drinkData.instructions;
+
+    sourceEl.textContent = "";
+    sourceEl.href = "";
+    h6El.textContent = "";
+
+    
+}
+
+var toggleTarget = function () {
     var elem = document.querySelector('.tap-target');
     var instance = M.TapTarget.init(elem);
     if (instance.isOpen) {
@@ -151,9 +163,39 @@ var toggleTarget = function() {
 
 document.addEventListener('DOMContentLoaded', toggleTarget);
 
-saveBtn.addEventListener("click", function(){
-    var favLi = document.createElement("li");
-    var storeObj = JSON.parse(localStorage.getItem("mealRecipe"));
-    favLi.textContent = storeObj.name;
-    favUl.appendChild(favLi);
+saveBtn.addEventListener("click", function () {
+    var ingredientsArr = []
+
+    // Stores ingredients into ingredientsArr
+    for( var i = 0; i<ulEl.childNodes.length;i++){
+        var ingredient = ulEl.childNodes[i].textContent;
+        if(!ingredientsArr.includes(ingredient)){
+            ingredientsArr.push(ingredient);
+        } 
+    }
+
+    // Object containing all drink or meal info
+    var dataObject = {
+        name: nameEl.textContent,
+        instructions: instructionsEl.textContent,
+        ingredients: ingredientsArr,
+        image: imgEl.getAttribute("src")
+    }
+
+    console.log(dataObject);
+    
+    localStorage.setItem(dataObject.name, JSON.stringify(dataObject));
+
+    if (cardEl.getAttribute("data-id") === "meal") {
+        //var mealHead = 
+        var mealLi = document.createElement("li");
+        //var storeObj = JSON.parse(localStorage.getItem("mealRecipe"));
+        mealLi.textContent = dataObject.name;
+        mealUl.appendChild(mealLi);
+    } else {
+        var drinkLi = document.createElement("li");
+        //var storeObj = JSON.parse(localStorage.getItem("drinkRecipe"));
+        drinkLi.textContent = dataObject.name;
+        drinkUl.appendChild(drinkLi);
+    }
 });
