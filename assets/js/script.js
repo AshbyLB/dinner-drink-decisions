@@ -14,7 +14,6 @@ var cardEl = document.querySelector(".cardEl");
 var drinkUl = document.getElementById("drinkUl");
 
 
-
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
     popUp.classList.add("hide");
@@ -96,10 +95,6 @@ function buildMeal(data) {
     sourceEl.textContent = mealData.source;
     sourceEl.href = mealData.source;
 
-
-
-    //localStorage.setItem("mealRecipe", JSON.stringify(mealData));
-
 }
 
 function buildDrink(data) {
@@ -129,8 +124,6 @@ function buildDrink(data) {
             drinkData.image = drink[prop];
         }
     }
-    console.log(drinkData);
-    console.log(drinkData.image);
     imgEl.src = drinkData.image;
 
     nameEl.textContent = drinkData.name;
@@ -173,7 +166,6 @@ saveBtn.addEventListener("click", function () {
             ingredientsArr.push(ingredient);
         } 
     }
-
     // Object containing all drink or meal info
     var dataObject = {
         name: nameEl.textContent,
@@ -189,13 +181,36 @@ saveBtn.addEventListener("click", function () {
     if (cardEl.getAttribute("data-id") === "meal") {
         //var mealHead = 
         var mealLi = document.createElement("li");
-        //var storeObj = JSON.parse(localStorage.getItem("mealRecipe"));
+        mealLi.setAttribute("class", "mealLi")
         mealLi.textContent = dataObject.name;
         mealUl.appendChild(mealLi);
     } else {
         var drinkLi = document.createElement("li");
-        //var storeObj = JSON.parse(localStorage.getItem("drinkRecipe"));
+        drinkLi.setAttribute("class", "drinkLi")
         drinkLi.textContent = dataObject.name;
         drinkUl.appendChild(drinkLi);
     }
 });
+
+drinkUl.addEventListener("click", function(event){
+    var drinkList = document.querySelector(".drinkLi");
+    var storeObj = JSON.parse(localStorage.getItem("Impamena"));
+
+    // drinkList.value=localStorage.getItem()
+    console.log("name", storeObj);
+
+    // imgEl.src = drinkData.image;
+    // nameEl.textContent = drinkData.name;
+    // ulEl.innerHTML = "";
+
+    // for (var i = 0; i < drinkData.ingredients.length; i++) {
+    //     var liEl = document.createElement("li");
+    //     liEl.textContent = drinkData.ingredients[i];
+    //     ulEl.appendChild(liEl);
+    // }
+
+    // instructionsEl.textContent = drinkData.instructions;
+    // sourceEl.textContent = "";
+    // sourceEl.href = "";
+    // h6El.textContent = "";
+})
