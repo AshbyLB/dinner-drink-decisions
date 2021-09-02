@@ -193,11 +193,11 @@ saveBtn.addEventListener("click", function () {
 });
 
 drinkUl.addEventListener("click", function(event){
-    var drinkList = document.querySelector(".drinkLi");
-    var storeObj = JSON.parse(localStorage.getItem("Impamena"));
+   // var drinkList = document.querySelector(".drinkLi");
+    var storeObj = JSON.parse(localStorage.getItem(event.target.value));
 
     // drinkList.value=localStorage.getItem()
-    console.log("name", storeObj);
+    console.log(event.target.value);
 
     // imgEl.src = drinkData.image;
     // nameEl.textContent = drinkData.name;
