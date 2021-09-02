@@ -66,14 +66,16 @@ h6 {
 
 #favList {
     display:flex;
-    color: white;
+    color:rgb(255, 208, 121)
     justify-content: center;
 }
 
-#favUl {
+#drinkUl #mealUl {
     display:inline-block;
 }
 
-#favUl li {
+#drinkUl li #mealUl li {
     padding: 5px;
+    background-color: olivedrab;
+    margin: 5px;
 }
