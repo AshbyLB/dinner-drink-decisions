@@ -44,10 +44,36 @@ body {
     font-size: 250%;
     font-weight:900;
     background-color:black;
+    border-radius: 5px;
+}
+
+#saveBtn {
+    padding: 7px;
+    background-color: olivedrab;
+    color: rgb(255, 208, 121);
+    border-radius: 5px;
+}
+
+#saveBtn:hover {
+    font-size: 115%;
 }
 
 h6 {
     font-family: 'Cookie', cursive;
     text-decoration: underline;
     font-size: 200%;
+}
+
+#favList {
+    display:flex;
+    color: white;
+    justify-content: center;
+}
+
+#favUl {
+    display:inline-block;
+}
+
+#favUl li {
+    padding: 5px;
 }

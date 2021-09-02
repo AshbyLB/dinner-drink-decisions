@@ -9,6 +9,7 @@ var ulEl = document.getElementById("ingredients");
 var instructionsEl = document.getElementById("instructions");
 var sourceEl = document.getElementById("source");
 var h6El = document.getElementById("sourceH6");
+var saveBtn = document.getElementById("saveBtn");
 
 
 
@@ -53,25 +54,30 @@ selectElement.addEventListener('change', (event) => {
                         mealData.image = meal[prop];
                     }
                 }
-
+                
+                
                 imgEl.src = mealData.image;
                 nameEl.textContent = mealData.name;
-
+                
                 
                 ulEl.innerHTML = "";
-
+                
                 for(var i=0; i <mealData.ingredients.length; i++){
-                var liEl = document.createElement("li");
-                liEl.textContent = mealData.ingredients[i];
-                ulEl.appendChild(liEl);
+                    var liEl = document.createElement("li");
+                    liEl.textContent = mealData.ingredients[i];
+                    ulEl.appendChild(liEl);
                 }
-
+                
                 instructionsEl.textContent = mealData.instructions;
-
+                
                 h6El.textContent = "Link to full recipe: ";
                 sourceEl.textContent = mealData.source;
                 sourceEl.href = mealData.source;
+                
 
+
+                localStorage.setItem("mealRecipe", JSON.stringify(mealData));
+                
             })
 
     } else {
@@ -87,22 +93,21 @@ selectElement.addEventListener('change', (event) => {
                     name: '',
                     instructions: '',
                     ingredients: [],
-                    source: '',
                     image: ''
                 };
                 for(var prop in drink) {
                     if (prop === "strDrink") { // name
                         drinkData.name = drink[prop];
                     }
-
+                    
                     if (prop === "strInstructions") { // instructions
                         drinkData.instructions = drink[prop];
                     }
-
+                    
                     if (prop.includes("strIngredient") && drink[prop]) { // ingredients that have values
                         drinkData.ingredients.push(drink[prop]);
                     }
-
+                    
                     if (prop === "strDrinkThumb") { // image
                         drinkData.image = drink[prop];
                     }
@@ -110,27 +115,28 @@ selectElement.addEventListener('change', (event) => {
                 console.log(drinkData);
                 console.log(drinkData.image);
                 imgEl.src = drinkData.image;
-
+                
                 nameEl.textContent = drinkData.name;
-
+                
                 ulEl.innerHTML = "";
-
+                
                 for(var i=0; i <drinkData.ingredients.length; i++){
-                var liEl = document.createElement("li");
-                liEl.textContent = drinkData.ingredients[i];
-                ulEl.appendChild(liEl);
+                    var liEl = document.createElement("li");
+                    liEl.textContent = drinkData.ingredients[i];
+                    ulEl.appendChild(liEl);
                 }
-
+                
                 instructionsEl.textContent = drinkData.instructions;
-                console.log(drinkData.instructions);
-
+                
                 sourceEl.textContent = "";
                 sourceEl.href = "";
                 h6El.textContent = "";
-            })
-            };
-    }
 
+                localStorage.setItem("mealRecipe", JSON.stringify(drinkData));
+            })
+        };
+    }
+    
 
 );
 
@@ -141,7 +147,13 @@ var toggleTarget = function() {
         return instance.destroy();
     }
     return instance.open();
-  }
+}
 
 document.addEventListener('DOMContentLoaded', toggleTarget);
 
+saveBtn.addEventListener("click", function(){
+    var favLi = document.createElement("li");
+    var storeObj = JSON.parse(localStorage.getItem("mealRecipe"));
+    favLi.textContent = storeObj.name;
+    favUl.appendChild(favLi);
+});
