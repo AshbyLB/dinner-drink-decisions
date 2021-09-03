@@ -12,12 +12,15 @@ var h6El = document.getElementById("sourceH6");
 var saveBtn = document.getElementById("saveBtn");
 var cardEl = document.querySelector(".cardEl");
 var drinkUl = document.getElementById("drinkUl");
+var drinkDiv = document.querySelector(".drinkDiv");
+var mealDiv = document.querySelector(".mealDiv");
+var mealHead = document.getElementById("mealHead");
+var drinkHead = document.getElementById("drinkHead");
 
 
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
     popUp.classList.add("hide");
-    console.log(event.target.value);
     if (event.target.value === "1") {
         event.target.value = "";
         fetch(randomMeal)
@@ -41,7 +44,6 @@ selectElement.addEventListener('change', (event) => {
 
 function buildMeal(data) {
     cardEl.setAttribute("data-id", "meal")
-    console.log('DATA', data.meals[0]);
     var meal = data.meals[0];
     var mealData = {
         name: '',
@@ -99,7 +101,6 @@ function buildMeal(data) {
 
 function buildDrink(data) {
     cardEl.setAttribute("data-id", "drink");
-    console.log("Drinks", data.drinks[0])
     var drink = data.drinks[0];
     var drinkData = {
         name: '',
@@ -142,7 +143,7 @@ function buildDrink(data) {
     sourceEl.href = "";
     h6El.textContent = "";
 
-    
+
 }
 
 var toggleTarget = function () {
@@ -160,11 +161,11 @@ saveBtn.addEventListener("click", function () {
     var ingredientsArr = []
 
     // Stores ingredients into ingredientsArr
-    for( var i = 0; i<ulEl.childNodes.length;i++){
+    for (var i = 0; i < ulEl.childNodes.length; i++) {
         var ingredient = ulEl.childNodes[i].textContent;
-        if(!ingredientsArr.includes(ingredient)){
+        if (!ingredientsArr.includes(ingredient)) {
             ingredientsArr.push(ingredient);
-        } 
+        }
     }
     // Object containing all drink or meal info
     var dataObject = {
@@ -174,17 +175,17 @@ saveBtn.addEventListener("click", function () {
         image: imgEl.getAttribute("src")
     }
 
-    console.log(dataObject);
-    
     localStorage.setItem(dataObject.name, JSON.stringify(dataObject));
 
     if (cardEl.getAttribute("data-id") === "meal") {
-        //var mealHead = 
+        mealHead.textContent = "Favorite Meals";
         var mealLi = document.createElement("li");
         mealLi.setAttribute("class", "mealLi")
         mealLi.textContent = dataObject.name;
         mealUl.appendChild(mealLi);
+
     } else {
+        drinkHead.textContent = "Favorite Drinks";
         var drinkLi = document.createElement("li");
         drinkLi.setAttribute("class", "drinkLi")
         drinkLi.textContent = dataObject.name;
@@ -192,25 +193,40 @@ saveBtn.addEventListener("click", function () {
     }
 });
 
-drinkUl.addEventListener("click", function(event){
-   // var drinkList = document.querySelector(".drinkLi");
-    var storeObj = JSON.parse(localStorage.getItem(event.target.value));
+drinkUl.addEventListener("click", function (event) {
+    var storeObj = JSON.parse(localStorage.getItem(event.target.textContent));
 
-    // drinkList.value=localStorage.getItem()
-    console.log(event.target.value);
+    imgEl.src = storeObj.image;
+    nameEl.textContent = storeObj.name;
+    ulEl.innerHTML = "";
 
-    // imgEl.src = drinkData.image;
-    // nameEl.textContent = drinkData.name;
-    // ulEl.innerHTML = "";
+    for (var i = 0; i < storeObj.ingredients.length; i++) {
+        var liEl = document.createElement("li");
+        liEl.textContent = storeObj.ingredients[i];
+        ulEl.appendChild(liEl);
+    }
 
-    // for (var i = 0; i < drinkData.ingredients.length; i++) {
-    //     var liEl = document.createElement("li");
-    //     liEl.textContent = drinkData.ingredients[i];
-    //     ulEl.appendChild(liEl);
-    // }
+    instructionsEl.textContent = storeObj.instructions;
+    sourceEl.textContent = "";
+    sourceEl.href = "";
+    h6El.textContent = "";
+})
 
-    // instructionsEl.textContent = drinkData.instructions;
-    // sourceEl.textContent = "";
-    // sourceEl.href = "";
-    // h6El.textContent = "";
+mealUl.addEventListener("click", function (event) {
+    var storeObj = JSON.parse(localStorage.getItem(event.target.textContent));
+
+    imgEl.src = storeObj.image;
+    nameEl.textContent = storeObj.name;
+    ulEl.innerHTML = "";
+
+    for (var i = 0; i < storeObj.ingredients.length; i++) {
+        var liEl = document.createElement("li");
+        liEl.textContent = storeObj.ingredients[i];
+        ulEl.appendChild(liEl);
+    }
+
+    instructionsEl.textContent = storeObj.instructions;
+    sourceEl.textContent = "";
+    sourceEl.href = "";
+    h6El.textContent = "";
 })
