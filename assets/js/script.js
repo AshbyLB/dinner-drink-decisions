@@ -14,12 +14,13 @@ var cardEl = document.querySelector(".cardEl");
 var drinkUl = document.getElementById("drinkUl");
 var drinkDiv = document.querySelector(".drinkDiv");
 var mealDiv = document.querySelector(".mealDiv");
+var mealHead = document.getElementById("mealHead");
+var drinkHead = document.getElementById("drinkHead");
 
 
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
     popUp.classList.add("hide");
-    console.log(event.target.value);
     if (event.target.value === "1") {
         event.target.value = "";
         fetch(randomMeal)
@@ -43,7 +44,6 @@ selectElement.addEventListener('change', (event) => {
 
 function buildMeal(data) {
     cardEl.setAttribute("data-id", "meal")
-    console.log('DATA', data.meals[0]);
     var meal = data.meals[0];
     var mealData = {
         name: '',
@@ -101,7 +101,6 @@ function buildMeal(data) {
 
 function buildDrink(data) {
     cardEl.setAttribute("data-id", "drink");
-    console.log("Drinks", data.drinks[0])
     var drink = data.drinks[0];
     var drinkData = {
         name: '',
@@ -176,23 +175,17 @@ saveBtn.addEventListener("click", function () {
         image: imgEl.getAttribute("src")
     }
 
-    console.log(dataObject);
-
     localStorage.setItem(dataObject.name, JSON.stringify(dataObject));
 
     if (cardEl.getAttribute("data-id") === "meal") {
-        var mealHead = document.createElement("h3");
         mealHead.textContent = "Favorite Meals";
-        mealDiv.appendChild(mealHead);
         var mealLi = document.createElement("li");
         mealLi.setAttribute("class", "mealLi")
         mealLi.textContent = dataObject.name;
         mealUl.appendChild(mealLi);
 
     } else {
-        var drinkHead = document.createElement("h3");
         drinkHead.textContent = "Favorite Drinks";
-        drinkDiv.appendChild(drinkHead);
         var drinkLi = document.createElement("li");
         drinkLi.setAttribute("class", "drinkLi")
         drinkLi.textContent = dataObject.name;
@@ -237,5 +230,3 @@ mealUl.addEventListener("click", function (event) {
     sourceEl.href = "";
     h6El.textContent = "";
 })
-
-//<i class="small material-icons">local_bar</i>
