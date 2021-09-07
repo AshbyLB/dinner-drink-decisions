@@ -29,4 +29,4 @@ HTML, CSS, and Javascript
 MIT
 
 ## Contact
-Ashby Blakely ashbyleeblakely@gmail.com, Laura Weiner laurarweiner@gmail.com, Kenneth Jackson 
+Ashby Blakely ashbyleeblakely@gmail.com, Laura Weiner laurarweiner@gmail.com, Kenneth Jackson  K.a.jack21@gmail.com.
