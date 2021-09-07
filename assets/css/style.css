@@ -21,6 +21,10 @@ body {
     color: rgb(255, 208, 121);
 }
 
+.dropDown {
+    width: 100%;
+}
+
 #menu {
     position: fixed;
     bottom: 40px;
