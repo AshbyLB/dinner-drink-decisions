@@ -17,6 +17,7 @@ var mealDiv = document.querySelector(".mealDiv");
 var mealHead = document.getElementById("mealHead");
 var drinkHead = document.getElementById("drinkHead");
 
+var favItems = JSON.parse(localStorage.getItem("favorites")) || [];
 
 selectElement.addEventListener('change', (event) => {
     showEl.classList.remove("hide");
@@ -157,7 +158,8 @@ var toggleTarget = function () {
 
 document.addEventListener('DOMContentLoaded', toggleTarget);
 
-saveBtn.addEventListener("click", function () {
+saveBtn.addEventListener("click", function (event) {
+
     var ingredientsArr = []
 
     // Stores ingredients into ingredientsArr
@@ -172,10 +174,12 @@ saveBtn.addEventListener("click", function () {
         name: nameEl.textContent,
         instructions: instructionsEl.textContent,
         ingredients: ingredientsArr,
-        image: imgEl.getAttribute("src")
+        image: imgEl.getAttribute("src"),
+        type: event.target.closest(".card").dataset.id
     }
-
-    localStorage.setItem(dataObject.name, JSON.stringify(dataObject));
+    
+    favItems.push(dataObject)
+    localStorage.setItem("favorites", JSON.stringify(favItems));
 
     if (cardEl.getAttribute("data-id") === "meal") {
         mealHead.textContent = "Favorite Meals";
